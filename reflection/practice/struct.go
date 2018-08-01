@@ -2,21 +2,25 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 )
 
-type T struct {
-	A int
-	B string
+type test interface {
+	hello() string
 }
 
-func main() {
-	t := T{23, "skidoo"}
-	s := reflect.ValueOf(&t).Elem()
-	fmt.Printf("s: %v, type: %T, settability: %v, numField: %v\n", s, s.Type(), s.CanSet(), s.NumField())
+type hotdog int
 
-	for i := 0; i < s.NumField(); i++ {
-		f := s.Field(i)
-		fmt.Printf("%d: %v, type: %T\n", i, f, f)
-	}
+func main() {
+	var d hotdog
+	fmt.Printf("%T\n", d)
+	fmt.Println(d.hello())
+	bye(d)
+}
+
+func (d hotdog) hello() string {
+	return "hello"
+}
+
+func bye(_ hotdog) {
+	fmt.Println("Bye")
 }
